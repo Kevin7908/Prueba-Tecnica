@@ -197,7 +197,7 @@ Con 16 ids únicos, unos 12 minutos. No es un cuelgue.
 
 - El proceso termina con código 0 aunque queden ids en `error_tecnico`; el código 1
   es solo para una falla fatal. Por eso hay que mirar el resumen, no solo el
-  código de salida.
+  código de salida (ver Pendientes).
 - No hay candado contra dos ejecuciones simultáneas. Si hay una en marcha, esperar
   a que termine.
 
@@ -212,3 +212,20 @@ src/reporte.py       genera el Excel desde la base
 .env.example         plantilla de configuración
 BITACORA.md          uso de IA durante el reto
 ```
+
+## Pendientes y mejoras posibles
+
+Lo que quedó fuera o sin cerrar, dicho tal cual:
+
+- **Sin pruebas automáticas.** Probé a mano contra la API real (primera corrida,
+  segunda corrida sin consultas, Excel sin duplicados). Lo que más valdría
+  probar con tests es `lector.py` con el CSV del reto.
+- **Código de salida.** Hoy solo sale con 1 en falla fatal. Podría salir con 1
+  también cuando queden `error_tecnico`, para que un programador de tareas o un
+  monitor lo detecte.
+- **Los descartados del CSV no van al Excel.** Auditoría solo los ve si lee el
+  log o el resumen.
+- **Sin candado de ejecución simultánea.**
+- **Reintentos extra** (`408`, `429`, JSON inválido) y aviso automático (correo o
+  chat) cuando haya `error_tecnico`.
+- Sin Docker: es un script batch simple, no lo necesitaba para este alcance.
